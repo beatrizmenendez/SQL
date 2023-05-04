@@ -1,0 +1,94 @@
+#In this project I showcase my skills and abilities in SQL that highlight my proficiency in querying and manipulating data to answer different questions.
+
+
+#1. What is the total of customers based in Canada?
+
+SELECT * FROM chinook.customers
+
+WHERE country = 'Canada';
+
+
+#2. What is the total of customers that are NOT based in Canada?
+
+SELECT FirstName, LastName, Customerid, Country
+
+FROM chinook.customers
+
+WHERE country != 'Canada';
+
+
+#3. What are all the total of invoices of Canadian customers?
+
+SELECT cust.FirstName, cust.LastName, inv.InvoiceId, inv.BillingCountry, inv.InvoiceDate
+
+FROM chinook.invoices AS inv
+
+LEFT JOIN chinook.customers AS cust
+
+ON inv.InvoiceId = cust.customerid
+
+WHERE inv.BillingCountry = 'Canada';
+
+
+#4. What is the total of employees that hold the 'Sales Support Agent' title?
+
+SELECT * FROM chinook.employees
+
+WHERE title = 'Sales Support Agent';
+
+
+#5. Find a unique/distinct list of billing countries from the Invoice table.
+
+SELECT distinct BillingCountry FROM chinook.invoices;
+
+
+#6. What are the invoices associated with every Sales Agent?
+
+SELECT emp.FirstName, emp.LastName, inv.InvoiceId
+
+FROM chinook.employees emp
+
+JOIN chinook.customers cust
+
+ON cust.SupportRepId = emp.EmployeeId
+
+JOIN chinook.invoices Inv 
+
+ON Inv.CustomerId = cust.CustomerId;
+
+
+#7. What is the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers?
+
+SELECT emp.FirstName, emp.LastName, cust.FirstName, cust.LastName, cust.Country, inv.Total
+
+FROM chinook.employees emp
+
+JOIN chinook.customers cust
+
+ON emp.employeeid = cust.supportrepid
+
+JOIN chinook.invoices inv
+
+ON inv.customerid = cust.customerid;
+
+
+#8. How many invoices were there in 2009?
+
+SELECT COUNT(*) FROM chinook.invoices
+
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+
+#9. What are the total sales for 2009?
+
+ELECT SUM(total) FROM chinook.invoices
+
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+
+#10. Write a query that includes the purchased track name with each invoice line ID
+
+
+
+
+
