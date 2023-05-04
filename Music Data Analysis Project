@@ -18,7 +18,7 @@ FROM chinook.customers
 WHERE country != 'Canada';
 
 
-#3. What are all the total of invoices of Canadian customers?
+#3. What is the total of invoices for Canadian customers?
 
 SELECT cust.FirstName, cust.LastName, inv.InvoiceId, inv.BillingCountry, inv.InvoiceDate
 
