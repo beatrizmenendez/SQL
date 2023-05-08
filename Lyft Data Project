@@ -1,0 +1,77 @@
+#Here I showcase my ability to utilize different types of JOINS to combine multiple tables as well as some of my 
+knowledge on other SQL queries and aggregate functions to analyze the data efficiently.
+
+
+-- CROSS JOIN between riders and cars.
+
+SELECT riders.first,
+riders.last,
+cars.model
+FROM riders, cars; 
+
+-- LEFT JOIN between trips and riders.
+
+SELECT *
+FROM trips t
+LEFT JOIN riders r
+  ON t.rider_id = r.id; 
+
+-- Same LEFT JOIN with specific SELECTED data to create a Trip Log.
+
+SELECT trips.date, 
+   t.pickup, 
+   t.dropoff, 
+   t.type, 
+   t.cost,
+   r.first, 
+   r.last,
+   r.username
+FROM trips t
+LEFT JOIN riders r
+  ON t.rider_id = r.id;
+
+-- INNER JOIN between trips and the cars used during such.
+
+SELECT *
+FROM trips t
+INNER JOIN cars c
+ON t.car_id = c.id; 
+
+-- Using UNION to combine new data from recent drivers with the other drivers.
+
+SELECT *
+FROM riders
+UNION
+SELECT * 
+FROM riders2; 
+
+-- Average cost of a trip. (Rounded to two decimals).
+
+SELECT ROUND(AVG(cost), 2)
+FROM trips;
+
+-- Lyft is looking to do an email campaign for all irregular users. Find the riders who have used Lyft less than 500 times.
+
+SELECT first, last, username
+FROM riders
+WHERE total_trips < 500
+UNION
+SELECT first, last, username
+FROM riders2
+WHERE total_trips < 500;
+
+-- What is the total number of cars that are active?
+
+SELECT COUNT(*)
+FROM cars
+WHERE status = 'active';
+
+-- It is safety recall time for cars who have been on the road for a while. Which ones are the TWO with the highest number
+of trips completed?
+
+SELECT *
+FROM cars
+ORDER BY trips_completed DESC
+LIMIT 2;
+
+
