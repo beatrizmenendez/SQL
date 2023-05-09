@@ -51,7 +51,7 @@ SELECT CASE
   END AS 'Source'
   FROM hacker_news;
   
--- Next, let's complete the previous query by to add column for the number of stories from each URL.
+-- Next, let's complete the previous query to add column for the number of stories from each URL.
 
 SELECT CASE
    WHEN url LIKE '%github.com%' THEN 'GitHub'
