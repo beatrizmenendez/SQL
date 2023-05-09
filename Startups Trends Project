@@ -1,0 +1,99 @@
+#Here I showcase my ability to use aggregate functions on SQL to extract meaningful information from a database
+that includes information about different startups. The purpose of the project is to find out what trends are found in the different companies.
+
+-- What is the total number of companies? 
+
+SELECT COUNT(name) AS total_companies
+FROM startups;
+
+-- What is the total value of all companies?
+
+SELECT SUM(valuation) AS total_value
+FROM startups;
+
+-- What is the highest amount raised by a startup?
+
+SELECT MAX(raised) AS highest_amount
+FROM startups;
+
+-- What is the highest amount raised by a startup during seed stage?
+
+SELECT MAX(raised) AS highest_amount_seed
+FROM startups
+WHERE stage = 'Seed';
+
+-- When was the oldest company founded?
+
+SELECT MIN(founded) AS oldest_company
+FROM startups;
+
+-- What is the average value of the companies?
+
+SELECT AVG(valuation) AS average_value
+FROM startups;
+
+
+
+EVALUATION AMONG DIFFERENT SECTORS:
+
+-- Average value of each category.
+
+SELECT category, AVG(valuation) AS avg_value_category
+FROM startups
+GROUP BY category;
+
+-- Average value of each category rounded to two decimals.
+
+SELECT category, ROUND(AVG(valuation), 2) AS avg_value_category
+FROM startups
+GROUP BY category;
+
+-- Average value of each category rounded to two decimals ordered from highest to lowest.
+
+SELECT category, ROUND(AVG(valuation), 2) AS avg_value_category
+FROM startups
+GROUP BY 1
+ORDER BY 2 DESC;
+
+
+WHAT ARE THE MOST COMPETITIVE MARKETS?
+
+#First:
+
+-- What is the total number of companies that belong to each category?
+
+SELECT category, COUNT(*) AS total_companies_category
+FROM startups
+GROUP by category;
+
+#Second:
+
+-- Let's filter the previous query so that it only returns those categories with MORE than three companies.
+
+SELECT category, COUNT(*) AS total_companies_category
+FROM startups
+GROUP by category
+HAVING COUNT(*) > 3 
+ORDER BY 2 DESC;
+
+
+DIFFERENCES BETWEEN STARTUPS' SIZES AMONG DIFFERENT LOCATIONS.
+
+#First:
+
+-- What is the average size of a startup in each location?
+
+SELECT location, AVG(employees) AS avg_size
+FROM startups
+GROUP BY location;
+
+#Second:
+
+-- What is the average size of a startup in each location, with average sizes above 500?
+
+SELECT location, AVG(employees) AS avg_size_500
+FROM startups
+GROUP BY location
+HAVING AVG(employees) > 500
+ORDER BY 2 DESC;
+
