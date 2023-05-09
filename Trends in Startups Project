@@ -1,4 +1,4 @@
-#Here I showcase my ability to use aggregate functions on SQL to extract meaningful information from a database
+#Here I showcase my ability to use aggregate functions in SQL to extract meaningful information from a database
 that includes information about different startups. The purpose of the project is to find out what trends are found in the different companies.
 
 -- What is the total number of companies? 
