@@ -3,33 +3,33 @@ that includes information about different startups. The purpose of the project i
 
 -- What is the total number of companies? 
 
-SELECT COUNT(name) AS total_companies
+SELECT COUNT(name) AS 'Total Companies'
 FROM startups;
 
 -- What is the total value of all companies?
 
-SELECT SUM(valuation) AS total_value
+SELECT SUM(valuation) AS 'Total Value'
 FROM startups;
 
 -- What is the highest amount raised by a startup?
 
-SELECT MAX(raised) AS highest_amount
+SELECT MAX(raised) AS 'Highest Amount Raised'
 FROM startups;
 
 -- What is the highest amount raised by a startup during seed stage?
 
-SELECT MAX(raised) AS highest_amount_seed
+SELECT MAX(raised) 
 FROM startups
 WHERE stage = 'Seed';
 
 -- When was the oldest company founded?
 
-SELECT MIN(founded) AS oldest_company
+SELECT MIN(founded) AS 'Oldest Company'
 FROM startups;
 
 -- What is the average value of the companies?
 
-SELECT AVG(valuation) AS average_value
+SELECT AVG(valuation) AS 'Average Value'
 FROM startups;
 
 
@@ -38,19 +38,19 @@ EVALUATION AMONG DIFFERENT SECTORS:
 
 -- Average value of each category.
 
-SELECT category, AVG(valuation) AS avg_value_category
+SELECT category, AVG(valuation) 
 FROM startups
 GROUP BY category;
 
 -- Average value of each category rounded to two decimals.
 
-SELECT category, ROUND(AVG(valuation), 2) AS avg_value_category
+SELECT category, ROUND(AVG(valuation), 2) 
 FROM startups
 GROUP BY category;
 
 -- Average value of each category rounded to two decimals ordered from highest to lowest.
 
-SELECT category, ROUND(AVG(valuation), 2) AS avg_value_category
+SELECT category, ROUND(AVG(valuation), 2) 
 FROM startups
 GROUP BY 1
 ORDER BY 2 DESC;
@@ -83,7 +83,7 @@ DIFFERENCES BETWEEN STARTUPS' SIZES AMONG DIFFERENT LOCATIONS.
 
 -- What is the average size of a startup in each location?
 
-SELECT location, AVG(employees) AS avg_size
+SELECT location, AVG(employees) AS 'Average Size'
 FROM startups
 GROUP BY location;
 
@@ -91,7 +91,7 @@ GROUP BY location;
 
 -- What is the average size of a startup in each location, with average sizes above 500?
 
-SELECT location, AVG(employees) AS avg_size_500
+SELECT location, AVG(employees) 
 FROM startups
 GROUP BY location
 HAVING AVG(employees) > 500
