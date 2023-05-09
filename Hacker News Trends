@@ -1,0 +1,102 @@
+#In this SQL, I'm querying a database that's holding Hacker News data to answer question about the data.
+
+
+HACKER NEWS MODERATING:
+
+
+#Recent studies have found that online forums tend to be dominated by a small percentage of their users (1-9-90 Rule). 
+
+-- First, let's find the total score of all the stories.
+
+SELECT SUM(score)
+FROM hacker_news;
+
+-- Next, we need to pinpoint the users who have accumulated a lot of points across their stories.
+Let's find the individual users who have gotten combined scores of more than 200, and their combined scores.
+
+SELECT user, SUM(score)
+FROM hacker_news
+GROUP BY user
+HAVING SUM(score) > 200
+ORDER BY 2 DESC;
+
+-- Then, we want to add these users’ scores together and divide by the total to get the percentage.
+
+SELECT (517 + 309 + 304 + 282) / 6366.0;
+
+#Some users are rickrolling — tricking readers into clicking on a link to a funny video and claiming that it links to information about coding.
+How many times has each offending user posted this link?
+
+SELECT user,
+   COUNT(*)
+FROM hacker_news
+WHERE url LIKE '%watch?v=dQw4w9WgXcQ%'
+GROUP BY 1
+ORDER BY 2 DESC;
+
+
+WHICH SITES FEED HACKER NEWS? 
+
+
+#Hacker News stories are essentially links that take users to other websites. 
+Which of these sites feed Hacker News the most: GitHub, Medium, or New York Times?
+
+-- First, we want to categorize each story based on their source.
+
+SELECT CASE
+   WHEN url LIKE '%github.com%' THEN 'GitHub'
+   WHEN url LIKE '%medium.com%' THEN 'Medium'
+   WHEN url LIKE '%nytimes.com%' THEN 'New York Times'
+   ELSE 'Other'
+  END AS 'Source'
+  FROM hacker_news;
+  
+-- Next, let's complete the previous query by to add column for the number of stories from each URL.
+
+SELECT CASE
+   WHEN url LIKE '%github.com%' THEN 'GitHub'
+   WHEN url LIKE '%medium.com%' THEN 'Medium'
+   WHEN url LIKE '%nytimes.com%' THEN 'New York Times'
+   ELSE 'Other'
+  END AS 'Source',
+  COUNT(*)
+  FROM hacker_news
+  GROUP BY 1;
+  
+WHAT IS THE BEST TIME TO POST A STORY?
+
+#What’s the best time of the day to post a story on Hacker News?
+
+-- Before we answer this, let's take a look at the timestamp.
+
+SELECT timestamp
+FROM hacker_news
+LIMIT 10;
+
+-- Next, let's return the hours of the timestamp.
+
+SELECT timestamp,
+   strftime('%H', timestamp)
+FROM hacker_news
+GROUP BY 1
+LIMIT 20;
+
+-- Now, let's write a query that returns the hours of the timestamp, the average score for each hour
+and the count of stories for each hour.
+
+SELECT strftime('%H', timestamp), 
+   AVG(score),
+   COUNT(*)
+FROM hacker_news
+GROUP BY 1
+ORDER BY 2 DESC;
+
+-- Lastly, let's fix the previous query to make it more readable.
+
+SELECT strftime('%H', timestamp) AS 'Hour', 
+   ROUND(AVG(score), 1) AS 'Average Score', 
+   COUNT(*) AS 'Number of Stories'
+FROM hacker_news
+WHERE timestamp IS NOT NULL
+GROUP BY 1
+ORDER BY 2 DESC;
