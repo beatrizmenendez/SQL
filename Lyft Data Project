@@ -2,7 +2,7 @@
 knowledge on other SQL queries and aggregate functions to analyze the data efficiently.
 
 
--- CROSS JOIN between riders and cars.
+-- CROSS JOIN between riders and cars to see if we can find any useful information.
 
 SELECT riders.first,
 riders.last,
@@ -30,14 +30,14 @@ FROM trips t
 LEFT JOIN riders r
   ON t.rider_id = r.id;
 
--- INNER JOIN between trips and the cars used during such.
+-- Create INNER JOIN to see which cars are used during the trips.
 
 SELECT *
 FROM trips t
 INNER JOIN cars c
 ON t.car_id = c.id; 
 
--- Using UNION to combine new data from recent drivers with the other drivers.
+-- Use UNION to combine new data from recent drivers with the other drivers.
 
 SELECT *
 FROM riders
@@ -45,12 +45,12 @@ UNION
 SELECT * 
 FROM riders2; 
 
--- Average cost of a trip. (Rounded to two decimals).
+-- What is the average cost of a trip? (Rounded to two decimals).
 
 SELECT ROUND(AVG(cost), 2)
 FROM trips;
 
--- Lyft is looking to do an email campaign for all irregular users. Find the riders who have used Lyft less than 500 times.
+-- Lyft is looking to do an email campaign for all irregular users. Thus, let's find the riders who have used Lyft less than 500 times.
 
 SELECT first, last, username
 FROM riders
